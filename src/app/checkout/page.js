@@ -1,11 +1,12 @@
 "use client";
 
 import { useSearchParams, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import API from "@/lib/api";
 import { motion } from "framer-motion";
+import Header from "@/components/Header";
 
-export default function CheckoutPage() {
+function CheckoutPageContent() {
   const params = useSearchParams();
   const router = useRouter();
 
@@ -79,22 +80,7 @@ export default function CheckoutPage() {
 
   const totalAmount = seats.reduce((sum, s) => sum + s.price, 0);
 
-  const confirmBooking = async () => {
-    setIsProcessing(true);
-    try {
-      const res = await API.post("/user/bookings/confirm", {
-        show_id: showId,
-        seat_ids: seatIds.map((s) => Number(s.seat_id)),
-        payment_gateway: "Razorpay",
-      });
-
-      router.push(`/booking-success/${res.data.booking_id}`);
-    } catch (err) {
-      alert(err.response?.data?.message);
-    } finally {
-      setIsProcessing(false);
-    }
-  };
+;
 
   const loadRazorpay = () => {
     return new Promise((resolve) => {
@@ -106,13 +92,31 @@ export default function CheckoutPage() {
     });
   };
 
+  // const confirmBooking = async (bookingId) => {
+  //   setIsProcessing(true);
+  //   try {
+  //     const res = await API.post("/user/bookings/confirm", {
+  //       show_id: showId,
+  //       seat_ids: seatIds.map((s) => Number(s.seat_id)),
+  //       payment_gateway: "Razorpay",
+  //     });
+
+  //     router.push(`/booking-success/${res.data.booking_id}`);
+  //   } catch (err) {
+  //     alert(err.response?.data?.message);
+  //   } finally {
+  //     setIsProcessing(false);
+  //   }
+  // }
+
   const handlePayment = async () => {
     setIsProcessing(true);
     try {
-      const res = await API.post(`/user/bookings/lock-seats`, {
-        user_id: 2,
+      
+      const res = await API.post("/user/bookings/confirm", {
         show_id: showId,
         seat_ids: seatIds.map((s) => Number(s.seat_id)),
+        payment_gateway: "Razorpay",
       });
 
       const bookingId = res.data.booking_id;
@@ -135,14 +139,25 @@ export default function CheckoutPage() {
         amount: order.amount,
         currency: "INR",
         order_id: order.id,
-
+        modal: {
+          ondismiss: function () {
+            setIsProcessing(false);
+          },
+        },
         handler: async function (response) {
-          await API.post("/user/bookings/payment/verify", {
-            ...response,
-            booking_id: bookingId,
-          });
+          try {
+            await API.post("/user/bookings/payment/verify", {
+              ...response,
+              booking_id: bookingId,
+            });
 
-          router.push(`/booking-success/${bookingId}`);
+            router.push(`/booking-success/${bookingId}`);
+
+          } catch (err) {
+            console.error("Payment verification error:", err);
+            alert("Payment verification failed. Please try again.");
+            setIsProcessing(false);
+          }
         },
       };
 
@@ -151,7 +166,6 @@ export default function CheckoutPage() {
     } catch (err) {
       console.error("Payment error:", err);
       alert("Payment failed. Please try again.");
-    } finally {
       setIsProcessing(false);
     }
   };
@@ -175,7 +189,7 @@ export default function CheckoutPage() {
   const handleBack = () => {
     clearSelectedSeats();
     router.back();
-  }
+  };
 
   return (
     <motion.div
@@ -192,6 +206,9 @@ export default function CheckoutPage() {
       >
         ← Back
       </motion.button>
+
+      {/* Header */}
+      <Header />
 
       <div className="max-w-4xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Main Content */}
@@ -362,19 +379,17 @@ export default function CheckoutPage() {
                 "Pay Now"
               )}
             </motion.button>
-
-            <motion.button
-              onClick={confirmBooking}
-              disabled={isProcessing}
-              whileHover={{ scale: isProcessing ? 1 : 1.02 }}
-              whileTap={{ scale: isProcessing ? 1 : 0.98 }}
-              className="w-full py-3 bg-slate-700/50 text-white font-semibold rounded-lg hover:bg-slate-600/50 transition-all disabled:opacity-50 disabled:cursor-not-allowed border border-slate-600"
-            >
-              {isProcessing ? "Processing..." : "Confirm Booking"}
-            </motion.button>
           </motion.div>
         </motion.div>
       </div>
     </motion.div>
+  );
+}
+
+export default function CheckoutPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <CheckoutPageContent />
+    </Suspense>
   );
 }

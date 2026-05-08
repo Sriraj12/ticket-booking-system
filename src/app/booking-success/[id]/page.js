@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import API from "@/lib/api";
 import { motion } from "framer-motion";
+import Header from "@/components/Header";
 
 export default function BookingSuccessPage() {
   const { id } = useParams();
@@ -100,6 +101,9 @@ export default function BookingSuccessPage() {
       transition={{ duration: 0.5 }}
       className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 py-12 px-6 overflow-hidden"
     >
+      {/* Header */}
+      <Header />
+
       {/* Celebrating confetti-like elements */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
         {[...Array(12)].map((_, i) => (
@@ -229,9 +233,13 @@ export default function BookingSuccessPage() {
               <div className="border-t border-slate-600/50 pt-4">
                 <p className="text-slate-400 text-sm">Show Time</p>
                 <p className="text-white font-semibold text-lg">
-                  {new Date(booking.start_time).toLocaleDateString()}{" "}
+                  {new Date(booking.show.start_time).toLocaleDateString({
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })}{" "}
                   <span className="text-amber-400">
-                    {new Date(booking.start_time).toLocaleTimeString("en-US", {
+                    {new Date(booking.show.start_time).toLocaleTimeString("en-US", {
                       hour: "2-digit",
                       minute: "2-digit",
                       hour12: true,

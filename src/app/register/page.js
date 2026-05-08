@@ -5,22 +5,47 @@ import API from "@/lib/api";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 
-export default function LoginPage() {
+export default function RegisterPage() {
   const router = useRouter();
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleLogin = async () => {
-    if (!email || !password) {
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleRegister = async () => {
+    const { name, email, password, confirmPassword } = formData;
+
+    if (!name || !email || !password || !confirmPassword) {
       alert("Please fill in all fields");
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      alert("Passwords do not match");
+      return;
+    }
+
+    if (password.length < 6) {
+      alert("Password must be at least 6 characters long");
       return;
     }
 
     setIsLoading(true);
     try {
-      const res = await API.post("/auth/login", {
+      const res = await API.post("/auth/user/register", {
+        name,
         email,
         password,
       });
@@ -28,16 +53,10 @@ export default function LoginPage() {
       const { token, user } = res.data;
       localStorage.setItem("token", token);
 
-      // Role-based redirect
-      if (user.role_id === 1) {
-        router.push("/admin/dashboard");
-      } else if (user.role_id === 2) {
-        router.push("/seller/dashboard");
-      } else {
-        router.push("/movies");
-      }
+      alert("Registration successful! Welcome to CineBook.");
+      router.push("/movies");
     } catch (err) {
-      alert(err.response?.data?.message || "Login failed");
+      alert(err.response?.data?.message || "Registration failed");
     } finally {
       setIsLoading(false);
     }
@@ -45,7 +64,7 @@ export default function LoginPage() {
 
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
-      handleLogin();
+      handleRegister();
     }
   };
 
@@ -82,7 +101,7 @@ export default function LoginPage() {
               </span>
             </motion.div>
             <h1 className="text-3xl font-bold text-white mb-2">CineBook</h1>
-            <p className="text-slate-400">Book your favorite movies</p>
+            <p className="text-slate-400">Create your account</p>
           </div>
 
           {/* Form */}
@@ -94,13 +113,29 @@ export default function LoginPage() {
           >
             <div>
               <label className="block text-sm font-medium text-slate-300 mb-2">
+                Full Name
+              </label>
+              <input
+                type="text"
+                name="name"
+                placeholder="John Doe"
+                value={formData.name}
+                onChange={handleInputChange}
+                onKeyPress={handleKeyPress}
+                className="w-full px-4 py-3 bg-slate-700/50 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 transition-all"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-slate-300 mb-2">
                 Email Address
               </label>
               <input
                 type="email"
+                name="email"
                 placeholder="your@email.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={formData.email}
+                onChange={handleInputChange}
                 onKeyPress={handleKeyPress}
                 className="w-full px-4 py-3 bg-slate-700/50 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 transition-all"
               />
@@ -112,16 +147,32 @@ export default function LoginPage() {
               </label>
               <input
                 type="password"
+                name="password"
                 placeholder="••••••••"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                value={formData.password}
+                onChange={handleInputChange}
+                onKeyPress={handleKeyPress}
+                className="w-full px-4 py-3 bg-slate-700/50 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 transition-all"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-slate-300 mb-2">
+                Confirm Password
+              </label>
+              <input
+                type="password"
+                name="confirmPassword"
+                placeholder="••••••••"
+                value={formData.confirmPassword}
+                onChange={handleInputChange}
                 onKeyPress={handleKeyPress}
                 className="w-full px-4 py-3 bg-slate-700/50 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 transition-all"
               />
             </div>
 
             <motion.button
-              onClick={handleLogin}
+              onClick={handleRegister}
               disabled={isLoading}
               whileHover={{ scale: isLoading ? 1 : 1.02 }}
               whileTap={{ scale: isLoading ? 1 : 0.98 }}
@@ -145,22 +196,22 @@ export default function LoginPage() {
                       d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                     />
                   </svg>
-                  Logging in...
+                  Creating Account...
                 </span>
               ) : (
-                "Sign In"
+                "Create Account"
               )}
             </motion.button>
           </motion.div>
 
           {/* Footer */}
           <p className="text-center text-slate-400 text-sm mt-6">
-            Don't have an account?{" "}
+            Already have an account?{" "}
             <span
-              onClick={() => router.push("/register")}
+              onClick={() => router.push("/login")}
               className="text-amber-400 font-semibold cursor-pointer hover:text-amber-300"
             >
-              Sign up
+              Sign in
             </span>
           </p>
         </div>

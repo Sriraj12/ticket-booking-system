@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import API from "@/lib/api";
 import { useParams, useRouter } from "next/navigation";
 import { motion } from "framer-motion";
+import Header from "@/components/Header";
 
 export default function MovieDetailsPage() {
   const { id } = useParams();
@@ -66,6 +67,9 @@ export default function MovieDetailsPage() {
       transition={{ duration: 0.5 }}
       className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 py-12 px-6"
     >
+      {/* Header */}
+      <Header />
+
       {/* Back Button */}
       <motion.button
         whileHover={{ x: -5 }}
