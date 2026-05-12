@@ -4,9 +4,12 @@ import { useState } from "react";
 import API from "@/lib/api";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
+import PublicRoute from "@/components/PublicRoute";
+import { useAuth } from "@/contexts/AuthContext";
 
-export default function LoginPage() {
+function LoginForm() {
   const router = useRouter();
+  const { login } = useAuth();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -26,7 +29,7 @@ export default function LoginPage() {
       });
 
       const { token, user } = res.data;
-      localStorage.setItem("token", token);
+      login(token, user);
 
       // Role-based redirect
       if (user.role_id === 1) {
@@ -166,5 +169,13 @@ export default function LoginPage() {
         </div>
       </motion.div>
     </motion.div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <PublicRoute>
+      <LoginForm />
+    </PublicRoute>
   );
 }

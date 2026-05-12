@@ -4,9 +4,12 @@ import { useState } from "react";
 import API from "@/lib/api";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
+import PublicRoute from "@/components/PublicRoute";
+import { useAuth } from "@/contexts/AuthContext";
 
-export default function RegisterPage() {
+function RegisterForm() {
   const router = useRouter();
+  const { login } = useAuth();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -51,7 +54,7 @@ export default function RegisterPage() {
       });
 
       const { token, user } = res.data;
-      localStorage.setItem("token", token);
+      login(token, user);
 
       alert("Registration successful! Welcome to CineBook.");
       router.push("/movies");
@@ -217,5 +220,13 @@ export default function RegisterPage() {
         </div>
       </motion.div>
     </motion.div>
+  );
+}
+
+export default function RegisterPage() {
+  return (
+    <PublicRoute>
+      <RegisterForm />
+    </PublicRoute>
   );
 }

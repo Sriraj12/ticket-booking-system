@@ -5,8 +5,9 @@ import API from "@/lib/api";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import Header from "@/components/Header";
+import PrivateRoute from "@/components/PrivateRoute";
 
-export default function MoviesPage() {
+function MoviesContent() {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
@@ -148,5 +149,13 @@ export default function MoviesPage() {
         </motion.div>
       )}
     </motion.div>
+  );
+}
+
+export default function MoviesPage() {
+  return (
+    <PrivateRoute>
+      <MoviesContent />
+    </PrivateRoute>
   );
 }
