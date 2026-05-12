@@ -5,8 +5,9 @@ import API from "@/lib/api";
 import { useParams, useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import Header from "@/components/Header";
+import PrivateRoute from "@/components/PrivateRoute";
 
-export default function SeatSelectionPage() {
+function SeatSelectionContent() {
   const { id } = useParams();
   const router = useRouter();
 
@@ -73,11 +74,13 @@ export default function SeatSelectionPage() {
 
   // Group seats by rows for better visualization
   const groupedSeats = seatsWithStatus.reduce((acc, seat) => {
-    const row = seat.seat_number.charAt(0);
+    const row = seat.row_name.charAt(0);
     if (!acc[row]) acc[row] = [];
     acc[row].push(seat);
     return acc;
   }, {});
+
+  console.log("Seats with status:", groupedSeats);
 
   const totalAmount = selectedSeats.reduce((total, seatId) => {
     const seat = seats.find(s => s.id === seatId);
@@ -213,7 +216,7 @@ export default function SeatSelectionPage() {
                             : 'cursor-pointer hover:shadow-xl'
                         } ${getSeatColor(seat)}`}
                       >
-                        {seat.seat_number.slice(1)}
+                        {seat.seat_number}
                       </motion.button>
                     ))}
                   </div>
@@ -317,5 +320,13 @@ export default function SeatSelectionPage() {
         </div>
       </motion.footer>
     </motion.div>
+  );
+}
+
+export default function SeatSelectionPage() {
+  return (
+    <PrivateRoute>
+      <SeatSelectionContent />
+    </PrivateRoute>
   );
 }

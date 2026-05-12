@@ -2,17 +2,18 @@
 
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
+import { useAuth } from "@/contexts/AuthContext";
 
 export default function Header() {
   const router = useRouter();
+  const { user, logout } = useAuth();
 
   const handleEditProfile = () => {
     alert("Edit profile page is coming soon.");
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    router.push("/login");
+    logout();
   };
 
   return (
@@ -29,7 +30,7 @@ export default function Header() {
           </div>
           <div>
             <p className="text-slate-400 text-sm">Logged in as</p>
-            <p className="text-white font-semibold">Guest User</p>
+            <p className="text-white font-semibold">{user?.name || "User"}</p>
           </div>
         </div>
 

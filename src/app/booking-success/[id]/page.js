@@ -5,8 +5,9 @@ import { useParams, useRouter } from "next/navigation";
 import API from "@/lib/api";
 import { motion } from "framer-motion";
 import Header from "@/components/Header";
+import PrivateRoute from "@/components/PrivateRoute";
 
-export default function BookingSuccessPage() {
+function BookingSuccessContent() {
   const { id } = useParams();
   const router = useRouter();
 
@@ -298,5 +299,13 @@ export default function BookingSuccessPage() {
         </motion.div>
       </motion.div>
     </motion.div>
+  );
+}
+
+export default function BookingSuccessPage() {
+  return (
+    <PrivateRoute>
+      <BookingSuccessContent />
+    </PrivateRoute>
   );
 }

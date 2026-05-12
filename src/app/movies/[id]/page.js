@@ -5,8 +5,9 @@ import API from "@/lib/api";
 import { useParams, useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import Header from "@/components/Header";
+import PrivateRoute from "@/components/PrivateRoute";
 
-export default function MovieDetailsPage() {
+function MovieDetailsContent() {
   const { id } = useParams();
   const router = useRouter();
 
@@ -195,7 +196,7 @@ export default function MovieDetailsPage() {
                   >
                     <button className="w-full px-4 py-3 border-2 border-amber-500 text-amber-400 rounded-xl hover:bg-amber-500 hover:text-white hover:border-amber-600 font-semibold transition-all duration-300 shadow-lg hover:shadow-amber-500/50">
                       <div className="font-bold text-base">
-                        {new Date(show.start_time).toLocaleTimeString(
+                        {new Date(show.show_start_time).toLocaleTimeString(
                           "en-US",
                           {
                             hour: "numeric",
@@ -203,6 +204,11 @@ export default function MovieDetailsPage() {
                             hour12: true,
                           }
                         )}
+                        {/* {new Date(show.show_end_time).toLocaleDateString("en-US", {
+                          hour: "numeric",
+                          minute: "2-digit",
+                          hour12: true
+                        })} */}
                       </div>
                       <div className="text-xs opacity-75">
                         {show.screen.screen_name}
@@ -216,5 +222,13 @@ export default function MovieDetailsPage() {
         </div>
       </motion.div>
     </motion.div>
+  );
+}
+
+export default function MovieDetailsPage() {
+  return (
+    <PrivateRoute>
+      <MovieDetailsContent />
+    </PrivateRoute>
   );
 }

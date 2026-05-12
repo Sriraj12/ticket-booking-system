@@ -5,6 +5,7 @@ import { useEffect, useState, Suspense } from "react";
 import API from "@/lib/api";
 import { motion } from "framer-motion";
 import Header from "@/components/Header";
+import PrivateRoute from "@/components/PrivateRoute";
 
 function CheckoutPageContent() {
   const params = useSearchParams();
@@ -388,8 +389,10 @@ function CheckoutPageContent() {
 
 export default function CheckoutPage() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <CheckoutPageContent />
-    </Suspense>
+    <PrivateRoute>
+      <Suspense fallback={<div>Loading...</div>}>
+        <CheckoutPageContent />
+      </Suspense>
+    </PrivateRoute>
   );
 }
