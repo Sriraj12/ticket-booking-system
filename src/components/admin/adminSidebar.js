@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, Film, Building2, IndianRupee } from "lucide-react";
+import { LayoutDashboard, Film, Building2, IndianRupee, LogOut } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
 
 const menuItems = [
     { name: "Dashboard", href: "/admin/dashboard", icon: LayoutDashboard },
@@ -13,6 +14,11 @@ const menuItems = [
 
 const AdminSidebar = () => {
     const pathname = usePathname();
+    const { user, logout } = useAuth();
+    
+    const handleLogout = () => {
+        logout();
+    }
 
     return (
         <aside className="w-72 min-h-screen border-r border-slate-800/70 bg-slate-950/95 text-slate-100 p-6">
@@ -40,6 +46,10 @@ const AdminSidebar = () => {
                     );
                 })}
             </nav>
+            <button className="mt-10 flex w-full items-center justify-center gap-3 rounded-2xl bg-slate-800 px-4 py-3 text-slate-200 transition hover:bg-slate-700" onClick={handleLogout} >
+                <LogOut size={20} />
+                Logout
+            </button>
         </aside>
     );
 };

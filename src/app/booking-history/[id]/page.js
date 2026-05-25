@@ -8,7 +8,7 @@ import { motion } from "framer-motion";
 import Header from "@/components/Header";
 import PrivateRoute from "@/components/PrivateRoute";
 
-function BookingSuccessContent() {
+function BookingHistoryContent() {
   const { id } = useParams();
   const router = useRouter();
 
@@ -287,7 +287,7 @@ function BookingSuccessContent() {
   );
 }
 
-export default function BookingSuccessPage() {
+export default function BookingHistoryPage() {
   return (
     <PrivateRoute>
       <BookingSuccessContent />

@@ -11,6 +11,7 @@ import {
     Film,
     IndianRupee,
     LogOut,
+    Ticket,
 } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 
@@ -53,9 +54,12 @@ const SellerSidebar = () => {
     return (
         <aside className="w-72 min-h-screen border-r border-slate-800/70 bg-slate-950/95 text-slate-100 p-6">
             <div className="mb-10">
-                <h1 className="text-3xl font-extrabold tracking-tight bg-gradient-to-r from-amber-400 to-red-500 bg-clip-text text-transparent">
-                    Seller Panel
-                </h1>
+                <div className="flex">
+                    <h1 className="text-3xl mr-2 font-extrabold tracking-tight bg-gradient-to-r from-white to-black bg-clip-text text-transparent">
+                        BlackTicket 
+                    </h1>
+                    <Ticket className="text-slate-300" size={35} />
+                </div>
                 <p className="mt-2 text-sm text-slate-400">Manage theaters, shows, and revenue</p>
             </div>
 
