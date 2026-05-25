@@ -1,38 +1,22 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import API from "@/lib/api";
+import { useState } from "react";
+import useSWR from "swr";
 import { useParams, useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import Header from "@/components/Header";
 import PrivateRoute from "@/components/PrivateRoute";
+import API from "@/lib/api";
 
 function SeatSelectionContent() {
   const { id } = useParams();
   const router = useRouter();
 
-  const [seats, setSeats] = useState([]);
   const [selectedSeats, setSelectedSeats] = useState([]);
-  const [movieTitle, setMovieTitle] = useState("");
-  const [isLoading, setIsLoading] = useState(true);
+  const { data: seatsData, error, isLoading } = useSWR(`/user/shows/${id}/seats`);
 
-  useEffect(() => {
-    fetchSeats();
-  }, []);
-
-  
-
-  const fetchSeats = async () => {
-    try {
-      const res = await API.get(`/user/shows/${id}/seats`);
-      setSeats(res.data.seats);
-      setMovieTitle(res.data.movie.title);
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const seats = seatsData?.seats || [];
+  const movieTitle = seatsData?.movie?.title || "";
 
   const toggleSeat = (seat) => {
     if (seat.isBooked || seat.isLocked) return;
@@ -73,7 +57,15 @@ function SeatSelectionContent() {
   }));
 
   // Group seats by rows for better visualization
-  const groupedSeats = seatsWithStatus.reduce((acc, seat) => {
+  const groupedSeats = seatsWithStatus.sort((a, b) => {
+    // 1. Sort by Row Name first (A-Z)
+    if (a.row_name < b.row_name) return -1;
+    if (a.row_name > b.row_name) return 1;
+
+    // 2. Then sort by Seat Number (Numerical)
+    // Assuming your property is named seat_number
+    return parseInt(a.seat_number) - parseInt(b.seat_number);
+  }).reduce((acc, seat) => {
     const row = seat.row_name.charAt(0);
     if (!acc[row]) acc[row] = [];
     acc[row].push(seat);

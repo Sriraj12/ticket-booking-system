@@ -2,6 +2,7 @@
 
 import { useSearchParams, useRouter } from "next/navigation";
 import { useEffect, useState, Suspense } from "react";
+import useSWR from "swr";
 import API from "@/lib/api";
 import { motion } from "framer-motion";
 import Header from "@/components/Header";
@@ -80,8 +81,6 @@ function CheckoutPageContent() {
   };
 
   const totalAmount = seats.reduce((sum, s) => sum + s.price, 0);
-
-;
 
   const loadRazorpay = () => {
     return new Promise((resolve) => {
@@ -192,6 +191,8 @@ function CheckoutPageContent() {
     router.back();
   };
 
+  console.log("show", show)
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -253,7 +254,7 @@ function CheckoutPageContent() {
                 <div>
                   <p className="text-slate-400 text-sm">Show Time</p>
                   <p className="text-white font-semibold">
-                    {new Date(show.start_time).toLocaleString('en-US', {
+                    {new Date(show.show_start_time).toLocaleString('en-US', {
                         hour: 'numeric',
                         minute: '2-digit',
                         hour12: true

@@ -1,11 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import API from "@/lib/api";
+import API, { API_BASE_URL } from "@/lib/api";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import PublicRoute from "@/components/PublicRoute";
 import { useAuth } from "@/contexts/AuthContext";
+import { Ticket } from "lucide-react";
 
 function LoginForm() {
   const router = useRouter();
@@ -52,6 +53,11 @@ function LoginForm() {
     }
   };
 
+  const handleGoogleLogin = () => {
+    const redirectUri = `${window.location.origin}/auth/callback`;
+    window.location.href = `${API_BASE_URL}/auth/google?redirect_uri=${encodeURIComponent(redirectUri)}`;
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -81,10 +87,10 @@ function LoginForm() {
               className="flex justify-center mb-4"
             >
               <span className="text-4xl font-bold bg-gradient-to-r from-amber-400 to-red-600 bg-clip-text text-transparent">
-                🎬
+                <Ticket className="text-slate-300"  size={40} />
               </span>
             </motion.div>
-            <h1 className="text-3xl font-bold text-white mb-2">CineBook</h1>
+            <h1 className="text-3xl font-bold bg-gradient-to-r from-white to-black bg-clip-text text-transparent mb-2">BlackTicket</h1>
             <p className="text-slate-400">Book your favorite movies</p>
           </div>
 
@@ -154,11 +160,21 @@ function LoginForm() {
                 "Sign In"
               )}
             </motion.button>
+
+            <motion.button
+              type="button"
+              onClick={handleGoogleLogin}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              className="w-full py-3 mt-4 border border-slate-600 text-slate-100 font-semibold rounded-lg bg-white/10 hover:bg-white/15 transition-all duration-300 shadow-sm"
+            >
+              Continue with Google
+            </motion.button>
           </motion.div>
 
           {/* Footer */}
           <p className="text-center text-slate-400 text-sm mt-6">
-            Don't have an account?{" "}
+            Don&apos;t have an account?{" "}
             <span
               onClick={() => router.push("/register")}
               className="text-amber-400 font-semibold cursor-pointer hover:text-amber-300"
