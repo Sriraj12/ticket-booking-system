@@ -44,12 +44,12 @@ function BookingHistoryContent() {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center"
+        className="min-h-screen bg-gradient-to-br from-white via-slate-100 to-white flex items-center justify-center"
       >
         <motion.div
           animate={{ rotate: 360 }}
           transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-          className="w-12 h-12 border-4 border-amber-500/20 border-t-amber-500 rounded-full"
+          className="w-12 h-12 border-4 border-black/10 border-t-amber-500 rounded-full"
         />
       </motion.div>
     );
@@ -85,7 +85,7 @@ function BookingHistoryContent() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
-      className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 py-12 px-6 overflow-hidden"
+      className="min-h-screen bg-gradient-to-br from-white via-slate-100 to-white py-12 px-6 overflow-hidden"
     >
       {/* Header */}
       <Header />
@@ -148,7 +148,7 @@ function BookingHistoryContent() {
           <h1 className="text-5xl font-bold text-white mb-3">
             🎉 Booking Confirmed!
           </h1>
-          <p className="text-xl text-slate-300">
+          <p className="text-xl text-slate-700">
             Your tickets have been successfully booked. Get ready for an amazing cinema experience!
           </p>
         </motion.div>
@@ -159,7 +159,7 @@ function BookingHistoryContent() {
           <motion.div
             variants={itemVariants}
             whileHover={{ y: -4 }}
-            className="bg-gradient-to-r from-slate-800/50 to-slate-700/50 backdrop-blur-xl border border-slate-700/50 rounded-2xl p-6 shadow-xl"
+            className="bg-gradient-to-r from-slate-800/50 to-slate-700/50 backdrop-blur-xl border border-slate-200 rounded-2xl p-6 shadow-xl"
           >
             <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
               <span>🎬</span> Movie Details
@@ -167,22 +167,22 @@ function BookingHistoryContent() {
 
             <div className="space-y-3">
               <div>
-                <p className="text-slate-400 text-sm">Movie Title</p>
+                <p className="text-slate-600 text-sm">Movie Title</p>
                 <p className="text-white font-semibold text-lg">{movie.title}</p>
               </div>
 
               <div className="border-t border-slate-600/50 pt-3">
-                <p className="text-slate-400 text-sm">Theater</p>
+                <p className="text-slate-600 text-sm">Theater</p>
                 <p className="text-white font-semibold">
                   {booking.theater.theater_name}
                 </p>
-                <p className="text-slate-400 text-sm">
+                <p className="text-slate-600 text-sm">
                   {booking.theater.city}
                 </p>
               </div>
 
               <div className="border-t border-slate-600/50 pt-3">
-                <p className="text-slate-400 text-sm">Screen</p>
+                <p className="text-slate-600 text-sm">Screen</p>
                 <p className="text-white font-semibold">
                   {booking.screen.screen_name}
                 </p>
@@ -194,7 +194,7 @@ function BookingHistoryContent() {
           <motion.div
             variants={itemVariants}
             whileHover={{ y: -4 }}
-            className="bg-gradient-to-r from-slate-800/50 to-slate-700/50 backdrop-blur-xl border border-slate-700/50 rounded-2xl p-6 shadow-xl"
+            className="bg-gradient-to-r from-slate-800/50 to-slate-700/50 backdrop-blur-xl border border-slate-200 rounded-2xl p-6 shadow-xl"
           >
             <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
               <span>💺</span> Ticket Information
@@ -202,13 +202,13 @@ function BookingHistoryContent() {
 
             <div className="space-y-4">
               <div>
-                <p className="text-slate-400 text-sm mb-3">Your Seats</p>
+                <p className="text-slate-600 text-sm mb-3">Your Seats</p>
                 <div className="flex flex-wrap gap-2">
                   {seatDetails.map((seat) => (
                     <motion.span
                       key={seat.id}
                       whileHover={{ scale: 1.1 }}
-                      className="px-4 py-2 bg-gradient-to-r from-amber-500/20 to-red-600/20 border border-amber-500/50 text-amber-400 rounded-lg font-bold"
+                      className="px-4 py-2 bg-gradient-to-r from-black/10 to-slate-700/10 border border-black/10 text-black rounded-lg font-bold"
                     >
                       {seat.row_name}-{seat.seat_number} 
                     </motion.span>
@@ -217,14 +217,14 @@ function BookingHistoryContent() {
               </div>
 
               <div className="border-t border-slate-600/50 pt-4">
-                <p className="text-slate-400 text-sm">Show Time</p>
+                <p className="text-slate-600 text-sm">Show Time</p>
                 <p className="text-white font-semibold text-lg">
                   {new Date(booking.show.start_time).toLocaleDateString({
                     year: "numeric",
                     month: "long",
                     day: "numeric",
                   })}{" "}
-                  <span className="text-amber-400">
+                  <span className="text-black">
                     {new Date(booking.show.start_time).toLocaleTimeString("en-US", {
                       hour: "2-digit",
                       minute: "2-digit",
@@ -240,10 +240,10 @@ function BookingHistoryContent() {
         {/* Final Amount */}
         <motion.div
           variants={itemVariants}
-          className="bg-gradient-to-r from-amber-500/20 to-red-600/20 backdrop-blur-xl border border-amber-500/30 rounded-2xl p-8 mb-8 text-center"
+          className="bg-gradient-to-r from-black/10 to-slate-700/10 backdrop-blur-xl border border-black/30 rounded-2xl p-8 mb-8 text-center"
         >
-          <p className="text-slate-300 text-lg mb-2">Total Amount Paid</p>
-          <p className="text-5xl font-bold text-transparent bg-gradient-to-r from-amber-400 to-red-600 bg-clip-text">
+          <p className="text-slate-700 text-lg mb-2">Total Amount Paid</p>
+          <p className="text-5xl font-bold text-transparent bg-gradient-to-r from-black to-slate-700 bg-clip-text">
             ₹{booking.total_amount}
           </p>
         </motion.div>
@@ -251,10 +251,10 @@ function BookingHistoryContent() {
         {/* Booking ID */}
         <motion.div
           variants={itemVariants}
-          className="bg-slate-800/50 border border-slate-700/50 rounded-xl p-4 text-center mb-8"
+          className="bg-black/5 border border-slate-200 rounded-xl p-4 text-center mb-8"
         >
-          <p className="text-slate-400 text-sm mb-2">Booking Reference</p>
-          <p className="text-2xl font-bold text-amber-400 font-mono">
+          <p className="text-slate-600 text-sm mb-2">Booking Reference</p>
+          <p className="text-2xl font-bold text-black font-mono">
             #{booking.booking_id}
           </p>
         </motion.div>
@@ -268,7 +268,7 @@ function BookingHistoryContent() {
             onClick={() => downloadTicket(booking.booking_id)}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            className="flex-1 py-4 bg-gradient-to-r from-amber-500 to-red-600 text-white font-bold rounded-lg hover:from-amber-600 hover:to-red-700 transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
+            className="flex-1 py-4 bg-gradient-to-r from-black to-slate-700 text-white font-bold rounded-lg hover:from-slate-700 hover:to-slate-500 transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
           >
             <span>📥</span> Download Ticket
           </motion.button>
@@ -277,7 +277,7 @@ function BookingHistoryContent() {
             onClick={() => router.push("/movies")}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            className="flex-1 py-4 bg-slate-700/50 border border-slate-600 text-white font-bold rounded-lg hover:bg-slate-600/50 transition-all flex items-center justify-center gap-2"
+            className="flex-1 py-4 bg-black/5 border border-slate-600 text-white font-bold rounded-lg hover:bg-slate-200/50 transition-all flex items-center justify-center gap-2"
           >
             <span>🎬</span> Book More Movies
           </motion.button>

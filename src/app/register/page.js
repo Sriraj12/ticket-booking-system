@@ -1,11 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import API from "@/lib/api";
+import API, { API_BASE_URL } from "@/lib/api";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import PublicRoute from "@/components/PublicRoute";
 import { useAuth } from "@/contexts/AuthContext";
+import BlackTicketIcon from "../icon/blackTicket";
 
 function RegisterForm() {
   const router = useRouter();
@@ -71,17 +72,22 @@ function RegisterForm() {
     }
   };
 
+  const handleGoogleRegister = () => {
+    const redirectUri = `${window.location.origin}/auth/callback`;
+    window.location.href = `${API_BASE_URL}/auth/google/register?redirect_uri=${encodeURIComponent(redirectUri)}`;
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
-      className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 relative overflow-hidden"
+      className="min-h-screen flex items-center justify-center bg-gradient-to-br from-white via-slate-100 to-white relative overflow-hidden"
     >
       {/* Background elements */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-red-600 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob"></div>
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-amber-600 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob animation-delay-2000"></div>
+        <div className="absolute top-0 right-0 w-96 h-96 bg-black/10 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-black/10 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob animation-delay-2000"></div>
       </div>
 
       <motion.div
@@ -90,7 +96,7 @@ function RegisterForm() {
         transition={{ duration: 0.6, delay: 0.1 }}
         className="relative z-10 w-full max-w-md"
       >
-        <div className="bg-slate-800/80 backdrop-blur-xl border border-slate-700 rounded-2xl shadow-2xl p-8">
+        <div className="bg-black/5 backdrop-blur-xl border border-slate-300 rounded-2xl shadow-2xl p-8">
           {/* Logo/Title */}
           <div className="text-center mb-8">
             <motion.div
@@ -99,12 +105,12 @@ function RegisterForm() {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="flex justify-center mb-4"
             >
-              <span className="text-4xl font-bold bg-gradient-to-r from-amber-400 to-red-600 bg-clip-text text-transparent">
-                🎬
+              <span className="text-4xl font-bold bg-clip-text text-transparent">
+                <BlackTicketIcon width={180} height={100} />
               </span>
             </motion.div>
-            <h1 className="text-3xl font-bold text-white mb-2">CineBook</h1>
-            <p className="text-slate-400">Create your account</p>
+            {/* <h1 className="text-3xl font-bold text-white mb-2">CineBook</h1> */}
+            <p className="text-slate-600">Create your account</p>
           </div>
 
           {/* Form */}
@@ -115,7 +121,7 @@ function RegisterForm() {
             className="space-y-4"
           >
             <div>
-              <label className="block text-sm font-medium text-slate-300 mb-2">
+              <label className="block text-sm font-medium text-slate-700 mb-2">
                 Full Name
               </label>
               <input
@@ -125,12 +131,12 @@ function RegisterForm() {
                 value={formData.name}
                 onChange={handleInputChange}
                 onKeyPress={handleKeyPress}
-                className="w-full px-4 py-3 bg-slate-700/50 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 transition-all"
+                className="w-full px-4 py-3 bg-black/5 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-black focus:ring-2 focus:ring-black/10 transition-all"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-300 mb-2">
+              <label className="block text-sm font-medium text-slate-700 mb-2">
                 Email Address
               </label>
               <input
@@ -140,12 +146,12 @@ function RegisterForm() {
                 value={formData.email}
                 onChange={handleInputChange}
                 onKeyPress={handleKeyPress}
-                className="w-full px-4 py-3 bg-slate-700/50 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 transition-all"
+                className="w-full px-4 py-3 bg-black/5 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-black focus:ring-2 focus:ring-black/10 transition-all"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-300 mb-2">
+              <label className="block text-sm font-medium text-slate-700 mb-2">
                 Password
               </label>
               <input
@@ -155,12 +161,12 @@ function RegisterForm() {
                 value={formData.password}
                 onChange={handleInputChange}
                 onKeyPress={handleKeyPress}
-                className="w-full px-4 py-3 bg-slate-700/50 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 transition-all"
+                className="w-full px-4 py-3 bg-black/5 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-black focus:ring-2 focus:ring-black/10 transition-all"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-300 mb-2">
+              <label className="block text-sm font-medium text-slate-700 mb-2">
                 Confirm Password
               </label>
               <input
@@ -170,7 +176,7 @@ function RegisterForm() {
                 value={formData.confirmPassword}
                 onChange={handleInputChange}
                 onKeyPress={handleKeyPress}
-                className="w-full px-4 py-3 bg-slate-700/50 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 transition-all"
+                className="w-full px-4 py-3 bg-black/5 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-black focus:ring-2 focus:ring-black/10 transition-all"
               />
             </div>
 
@@ -179,7 +185,7 @@ function RegisterForm() {
               disabled={isLoading}
               whileHover={{ scale: isLoading ? 1 : 1.02 }}
               whileTap={{ scale: isLoading ? 1 : 0.98 }}
-              className="w-full py-3 mt-6 bg-gradient-to-r from-amber-500 to-red-600 text-white font-semibold rounded-lg hover:from-amber-600 hover:to-red-700 transition-all duration-300 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full py-3 mt-6 bg-gradient-to-r from-black to-slate-700 text-white font-semibold rounded-lg hover:from-slate-700 hover:to-slate-500 transition-all duration-300 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isLoading ? (
                 <span className="flex items-center justify-center">
@@ -205,14 +211,24 @@ function RegisterForm() {
                 "Create Account"
               )}
             </motion.button>
+
+            <motion.button
+              type="button"
+              onClick={handleGoogleRegister}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              className="w-full py-3 mt-4 border border-slate-600 text-slate-900 font-semibold rounded-lg bg-white/10 hover:bg-white/15 transition-all duration-300 shadow-sm"
+            >
+              Sign Up with Google
+            </motion.button>
           </motion.div>
 
           {/* Footer */}
-          <p className="text-center text-slate-400 text-sm mt-6">
+          <p className="text-center text-slate-600 text-sm mt-6">
             Already have an account?{" "}
             <span
               onClick={() => router.push("/login")}
-              className="text-amber-400 font-semibold cursor-pointer hover:text-amber-300"
+              className="text-black font-semibold cursor-pointer hover:text-slate-900"
             >
               Sign in
             </span>

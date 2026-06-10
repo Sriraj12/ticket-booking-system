@@ -63,12 +63,12 @@ function MovieDetailsContent() {
             <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center"
+                className="min-h-screen bg-gradient-to-br from-white via-slate-100 to-white flex items-center justify-center"
             >
                 <motion.div
                     animate={{ rotate: 360 }}
                     transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                    className="w-12 h-12 border-4 border-amber-500/20 border-t-amber-500 rounded-full"
+                    className="w-12 h-12 border-4 border-black/10 border-t-amber-500 rounded-full"
                 />
             </motion.div>
         );
@@ -84,7 +84,7 @@ function MovieDetailsContent() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
-            className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 py-12 px-6"
+            className="min-h-screen bg-gradient-to-br from-white via-slate-100 to-white py-12 px-6"
         >
             {/* Header */}
             <Header />
@@ -93,7 +93,7 @@ function MovieDetailsContent() {
             <motion.button
                 whileHover={{ x: -5 }}
                 onClick={() => router.back()}
-                className="mb-8 flex items-center gap-2 text-amber-400 font-semibold hover:text-amber-300 transition-colors"
+                className="mb-8 flex items-center gap-2 text-black font-semibold hover:text-slate-900 transition-colors"
             >
                 ← Back to Movies
             </motion.button>
@@ -110,7 +110,7 @@ function MovieDetailsContent() {
                     whileHover={{ scale: 1.05 }}
                     className="col-span-1 flex justify-center"
                 >
-                    <div className="rounded-2xl overflow-hidden shadow-2xl border border-slate-700/50 relative w-full max-w-sm aspect-[2/3]">
+                    <div className="rounded-2xl overflow-hidden shadow-2xl border border-slate-200 relative w-full max-w-sm aspect-[2/3]">
                         <Image
                             src={movie.poster_url}
                             alt={movie.title}
@@ -131,7 +131,7 @@ function MovieDetailsContent() {
                         <div>
                             <h1 className="text-5xl font-bold text-white mb-2">{movie.title}</h1>
                             <div className="flex gap-4 flex-wrap">
-                                <span className="px-3 py-1 bg-amber-500/20 text-amber-400 rounded-full text-sm font-semibold">
+                                <span className="px-3 py-1 bg-black/10 text-black rounded-full text-sm font-semibold">
                                     {movie.genre}
                                 </span>
                                 <span className="px-3 py-1 bg-red-500/20 text-red-400 rounded-full text-sm font-semibold">
@@ -140,18 +140,18 @@ function MovieDetailsContent() {
                             </div>
                         </div>
 
-                        <div className="space-y-3 border-t border-slate-700 pt-6">
+                        <div className="space-y-3 border-t border-slate-300 pt-6">
                             <div className="flex items-center gap-3">
-                                <span className="text-amber-400 font-semibold min-w-24">Duration:</span>
-                                <span className="text-slate-300">{movie.duration} minutes</span>
+                                <span className="text-black font-semibold min-w-24">Duration:</span>
+                                <span className="text-slate-700">{movie.duration} minutes</span>
                             </div>
                             <div className="flex items-center gap-3">
-                                <span className="text-amber-400 font-semibold min-w-24">Language:</span>
-                                <span className="text-slate-300">{movie.language || "Hindi"}</span>
+                                <span className="text-black font-semibold min-w-24">Language:</span>
+                                <span className="text-slate-700">{movie.language || "Hindi"}</span>
                             </div>
                             <div className="flex items-center gap-3">
-                                <span className="text-amber-400 font-semibold min-w-24">Format:</span>
-                                <span className="text-slate-300">2D, 3D, 4DX</span>
+                                <span className="text-black font-semibold min-w-24">Format:</span>
+                                <span className="text-slate-700">2D, 3D, 4DX</span>
                             </div>
                         </div>
 
@@ -159,9 +159,9 @@ function MovieDetailsContent() {
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             transition={{ delay: 0.4 }}
-                            className="bg-gradient-to-r from-amber-500/10 to-red-600/10 border border-amber-500/20 rounded-lg p-4"
+                            className="bg-gradient-to-r from-black/10 to-slate-700/10 border border-black/10 rounded-lg p-4"
                         >
-                            <p className="text-slate-300 text-sm">
+                            <p className="text-slate-700 text-sm">
                                 {movie.description ||
                                     "Experience cinema like never before. Book your seats now and enjoy the ultimate movie experience."}
                             </p>
@@ -178,7 +178,7 @@ function MovieDetailsContent() {
                 className="max-w-7xl mx-auto"
             >
                 <h2 className="text-3xl font-bold text-white mb-8">
-                    <span className="bg-gradient-to-r from-amber-400 to-red-600 bg-clip-text text-transparent">
+                    <span className="bg-gradient-to-r from-black to-slate-700 bg-clip-text text-transparent">
                         Available Shows
                     </span>
                 </h2>
@@ -213,8 +213,8 @@ function MovieDetailsContent() {
                                     onClick={() => setSelectedDate(date)}
                                     className={`min-w-[90px] rounded-2xl border p-4 transition-all duration-300 backdrop-blur-xl
                                     ${isSelected
-                                            ? "border-amber-500 bg-gradient-to-br from-amber-500 to-red-600 text-white shadow-xl shadow-amber-500/20"
-                                            : "border-slate-700 bg-slate-800/50 text-slate-300 hover:border-amber-500/40 hover:bg-slate-800"
+                                            ? "border-black bg-gradient-to-br from-black to-slate-700 text-white shadow-xl shadow-black/10"
+                                            : "border-slate-300 bg-black/5 text-slate-700 hover:border-black/40 hover:bg-black/10"
                                         }`}
                                 >
                                     <p className="text-sm font-medium">
@@ -245,7 +245,7 @@ function MovieDetailsContent() {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: theaterIndex * 0.1 }}
-                            className="bg-gradient-to-r from-slate-800/50 to-slate-700/50 backdrop-blur-xl border border-slate-700/50 rounded-2xl p-6 hover:border-amber-500/30 transition-all"
+                            className="bg-gradient-to-r from-slate-800/50 to-slate-700/50 backdrop-blur-xl border border-slate-200 rounded-2xl p-6 hover:border-black/30 transition-all"
                         >
                             {/* Theater Header */}
                             <div className="flex items-center gap-2 mb-6">
@@ -256,7 +256,7 @@ function MovieDetailsContent() {
                                         {theater}
                                     </h3>
 
-                                    <p className="text-slate-400 text-sm">
+                                    <p className="text-slate-600 text-sm">
                                         {
                                             Object.values(groupedShows[theater])[0][0]
                                                 .theater.city
@@ -270,13 +270,13 @@ function MovieDetailsContent() {
                                 {Object.keys(groupedShows[theater]).map((screenName) => (
                                     <div
                                         key={screenName}
-                                        className="rounded-2xl border border-slate-700/40 bg-slate-900/40 p-5"
+                                        className="rounded-2xl border border-slate-300/40 bg-slate-100/40 p-5"
                                     >
                                         {/* Screen Header */}
                                         <div className="flex items-center gap-2 mb-4">
                                             <span className="text-lg">🖥️</span>
 
-                                            <h4 className="text-lg font-semibold text-amber-400">
+                                            <h4 className="text-lg font-semibold text-black">
                                                 {screenName}
                                             </h4>
                                         </div>
@@ -293,7 +293,7 @@ function MovieDetailsContent() {
                                                     }
                                                     className="cursor-pointer"
                                                 >
-                                                    <button className="w-full px-4 py-3 border-2 border-amber-500 text-amber-400 rounded-xl hover:bg-amber-500 hover:text-white hover:border-amber-600 font-semibold transition-all duration-300 shadow-lg hover:shadow-amber-500/50">
+                                                    <button className="w-full px-4 py-3 border-2 border-black text-black rounded-xl hover:bg-amber-500 hover:text-white hover:border-amber-600 font-semibold transition-all duration-300 shadow-lg hover:shadow-black/10">
                                                         <div className="font-bold text-base">
                                                             {new Date(
                                                                 show.show_start_time
