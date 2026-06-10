@@ -122,14 +122,14 @@ const SellerMoviesPage = () => {
             <div className="space-y-8">
                 <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                     <div>
-                        <h1 className="text-4xl font-bold text-white">Theaters</h1>
-                        <p className="mt-2 text-slate-400">
+                        <h1 className="text-4xl font-bold text-black">Theaters</h1>
+                        <p className="mt-2 text-slate-600">
                             Available Movies
                         </p>
                     </div>
                     <button
                         onClick={() => setShowAddMovieModal(true)}
-                        className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-amber-500 to-red-500 px-6 py-3 text-sm font-semibold text-slate-950 shadow-lg shadow-amber-500/20 transition hover:from-amber-400 hover:to-red-600"
+                        className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-black to-slate-700 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-black/10 transition hover:from-slate-700 hover:to-slate-500"
                     >
                         + Add Movies
                     </button>
@@ -148,7 +148,7 @@ const SellerMoviesPage = () => {
                                 whileHover={{ y: -8 }}
                                 className="group cursor-pointer"
                             >
-                                <div className="relative overflow-hidden rounded-xl shadow-2xl border border-slate-700/50 hover:border-amber-500/50 transition-all duration-300 bg-slate-800/50 backdrop-blur-xl">
+                                <div className="relative overflow-hidden rounded-xl shadow-2xl border border-slate-200 hover:border-black/10 transition-all duration-300 bg-black/5 backdrop-blur-xl">
                                     {/* Image Container */}
                                     <div className="relative h-72 overflow-hidden">
                                         <motion.img
@@ -158,15 +158,15 @@ const SellerMoviesPage = () => {
                                             whileHover={{ scale: 1.12 }}
                                         />
                                         {/* Overlay Gradient */}
-                                        <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-black/15 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                                     </div>
 
                                     {/* Content */}
                                     <div className="p-5">
-                                        <h3 className="text-white font-bold text-lg mb-2 line-clamp-2 group-hover:text-amber-400 transition-colors">
+                                        <h3 className="text-black font-bold text-lg mb-2 line-clamp-2 group-hover:text-black transition-colors">
                                             {movie.title}
                                         </h3>
-                                        <p className="text-amber-400 text-sm font-semibold mb-3">{movie.genre}</p>
+                                        <p className="text-black text-sm font-semibold mb-3">{movie.genre}</p>
                                         <div className="flex items-center justify-between mt-4">
                                             {/* <span
                                                 className={`text-sm font-medium ${movie.is_active ? "text-green-400" : "text-red-400"
@@ -179,7 +179,7 @@ const SellerMoviesPage = () => {
                                                 onClick={() => handleToggleMovieStatus(movie.id, movie.is_active)}
                                                 className={`relative inline-flex h-7 w-14 items-center rounded-full transition-colors duration-300 ${movie.is_active
                                                     ? "bg-green-500"
-                                                    : "bg-slate-600"
+                                                    : "bg-slate-200"
                                                     }`}
                                             >
                                                 <span
@@ -199,99 +199,99 @@ const SellerMoviesPage = () => {
                 {showAddMovieModal &&
                     (
                         <div className="fixed inset-0 z-50 overflow-y-auto bg-black/70 p-4 backdrop-blur-sm">
-                            <div className="mx-auto max-w-3xl rounded-[32px] border border-slate-800/80 bg-slate-950/95 p-6 shadow-2xl">
+                            <div className="mx-auto max-w-3xl rounded-[32px] border border-slate-300/80 bg-slate-100/95 p-6 shadow-2xl">
                                 <div className="mb-6 flex items-start justify-between gap-4">
                                     <div>
                                         <h2 className="text-2xl font-bold text-white">
                                             Add Movie
                                         </h2>
-                                        <p className="mt-2 text-slate-400">
+                                        <p className="mt-2 text-slate-600">
                                             To be release by this week
                                         </p>
                                     </div>
                                     <button
                                         onClick={() => closeModal()}
-                                        className="rounded-full border border-slate-700 bg-slate-900 px-3 py-2 text-slate-300 hover:bg-slate-800"
+                                        className="rounded-full border border-slate-300 bg-slate-100 px-3 py-2 text-slate-700 hover:bg-black/10"
                                     >
                                         Close
                                     </button>
                                 </div>
 
                                 {errorMessage && (
-                                    <div className="mb-4 rounded-3xl bg-red-500/10 border border-red-500/20 p-4 text-sm text-red-200">
+                                    <div className="mb-4 rounded-3xl bg-black/5 border border-black/10 p-4 text-sm text-slate-600">
                                         {errorMessage}
                                     </div>
                                 )}
 
 
                                 <form onSubmit={handleTheaterSubmit} className="grid gap-4 sm:grid-cols-2">
-                                    <label className="space-y-2 text-sm text-slate-300">
+                                    <label className="space-y-2 text-sm text-slate-700">
                                         Title
                                         <input
                                             value={movieForm.title}
                                             onChange={(e) => setMovieForm({ ...movieForm, title: e.target.value })}
                                             required
-                                            className="w-full rounded-3xl border border-slate-800 bg-slate-900 px-4 py-3 text-white outline-none focus:border-amber-500"
+                                            className="w-full rounded-3xl border border-slate-300 bg-slate-100 px-4 py-3 text-black outline-none focus:border-black"
                                         />
                                     </label>
-                                    <label className="space-y-2 text-sm text-slate-300">
+                                    <label className="space-y-2 text-sm text-slate-700">
                                         Language
                                         <input
                                             value={movieForm.language}
-                                            onChange={(e) => setTheaterForm({ ...movieForm, language: e.target.value })}
+                                            onChange={(e) => setMovieForm({ ...movieForm, language: e.target.value })}
                                             required
-                                            className="w-full rounded-3xl border border-slate-800 bg-slate-900 px-4 py-3 text-white outline-none focus:border-amber-500"
+                                            className="w-full rounded-3xl border border-slate-300 bg-slate-100 px-4 py-3 text-black outline-none focus:border-black"
                                         />
                                     </label>
-                                    <label className="space-y-2 text-sm text-slate-300">
+                                    <label className="space-y-2 text-sm text-slate-700">
                                         Duration
                                         <input
                                             value={movieForm.duration}
-                                            onChange={(e) => setTheaterForm({ ...movieForm, duration: e.target.value })}
+                                            onChange={(e) => setMovieForm({ ...movieForm, duration: e.target.value })}
                                             required
-                                            className="w-full rounded-3xl border border-slate-800 bg-slate-900 px-4 py-3 text-white outline-none focus:border-amber-500"
+                                            className="w-full rounded-3xl border border-slate-300 bg-slate-100 px-4 py-3 text-black outline-none focus:border-black"
                                         />
                                     </label>
-                                    <label className="space-y-2 text-sm text-slate-300">
+                                    <label className="space-y-2 text-sm text-slate-700">
                                         Genre
                                         <input
                                             value={movieForm.genre}
-                                            onChange={(e) => setTheaterForm({ ...movieForm, genre: e.target.value })}
+                                            onChange={(e) => setMovieForm({ ...movieForm, genre: e.target.value })}
                                             required
-                                            className="w-full rounded-3xl border border-slate-800 bg-slate-900 px-4 py-3 text-white outline-none focus:border-amber-500"
+                                            className="w-full rounded-3xl border border-slate-300 bg-slate-100 px-4 py-3 text-black outline-none focus:border-black"
                                         />
                                     </label>
-                                    <label className="space-y-2 text-sm text-slate-300">
+                                    <label className="space-y-2 text-sm text-slate-700">
                                         Release Date
                                         <input
                                             value={movieForm.release_date}
-                                            onChange={(e) => setTheaterForm({ ...movieForm, release_date: e.target.value })}
-                                            className="w-full rounded-3xl border border-slate-800 bg-slate-900 px-4 py-3 text-white outline-none focus:border-amber-500"
+                                            onChange={(e) => setMovieForm({ ...movieForm, release_date: e.target.value })}
+                                            className="w-full rounded-3xl border border-slate-300 bg-slate-100 px-4 py-3 text-black outline-none focus:border-black"
                                         />
                                     </label>
-                                    <label className="space-y-2 text-sm text-slate-300">
+                                    <label className="space-y-2 text-sm text-slate-700">
                                         Poster URL
                                         <input
                                             value={movieForm.poster_url}
-                                            onChange={(e) => setTheaterForm({ ...movieForm, poster_url: e.target.value })}
-                                            className="w-full rounded-3xl border border-slate-800 bg-slate-900 px-4 py-3 text-white outline-none focus:border-amber-500"
+                                            onChange={(e) => setMovieForm({ ...movieForm, poster_url: e.target.value })}
+                                            className="w-full rounded-3xl border border-slate-300 bg-slate-100 px-4 py-3 text-black outline-none focus:border-black"
                                         />
                                     </label>
-                                    <label className="space-y-2 text-sm text-slate-300">
+                                    <label className="space-y-2 text-sm text-slate-700">
                                         Trailer_URL
                                         <input
                                             value={movieForm.trailer_url}
-                                            onChange={(e) => setTheaterForm({ ...movieForm, trailer_url: e.target.value })}
-                                            className="w-full rounded-3xl border border-slate-800 bg-slate-900 px-4 py-3 text-white outline-none focus:border-amber-500"
+                                            onChange={(e) => setMovieForm({ ...movieForm, trailer_url: e.target.value })}
+                                            className="w-full rounded-3xl border border-slate-300 bg-slate-100 px-4 py-3 text-black outline-none focus:border-black"
                                         />
 
                                     </label>
-                                    <label className="space-y-2 text-sm text-slate-300">
+                                    <label className="space-y-2 text-sm text-slate-700">
                                         Status
                                         <select
                                             value={movieForm.is_active}
-                                            onChange={(e) => setTheaterForm({ ...movieForm, is_active: e.target.value })}
-                                            className="w-full rounded-3xl border border-slate-800 bg-slate-900 px-4 py-3 text-white outline-none focus:border-amber-500"
+                                            onChange={(e) => setMovieForm({ ...movieForm, is_active: e.target.value })}
+                                            className="w-full rounded-3xl border border-slate-300 bg-slate-100 px-4 py-3 text-black outline-none focus:border-black"
                                         >
                                             <option value="active">Active</option>
                                             <option value="inactive">Inactive</option>
@@ -301,7 +301,7 @@ const SellerMoviesPage = () => {
                                         <button
                                             type="submit"
                                             disabled={isSubmitting}
-                                            className="inline-flex w-full items-center justify-center rounded-3xl bg-gradient-to-r from-amber-500 to-red-500 px-6 py-3 text-sm font-semibold text-slate-950 shadow-lg shadow-amber-500/20 transition hover:from-amber-400 hover:to-red-600 disabled:cursor-not-allowed disabled:opacity-50"
+                                            className="inline-flex w-full items-center justify-center rounded-3xl bg-gradient-to-r from-black to-slate-700 px-6 py-3 text-sm font-semibold text-black shadow-lg shadow-black/10 transition hover:from-slate-700 hover:to-slate-500 disabled:cursor-not-allowed disabled:opacity-50"
                                         >
                                             {isSubmitting ? "Saving..." : "Add Movie"}
                                         </button>

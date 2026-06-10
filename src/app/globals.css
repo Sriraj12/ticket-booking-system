@@ -4,16 +4,19 @@
 @tailwind utilities;
 
 :root {
-  --background: #0f172a;
-  --foreground: #f1f5f9;
-  --accent: #f59e0b;
-  --accent-dark: #dc2626;
+  --background: #ffffff;
+  --foreground: #000000;
+  --surface: rgba(0, 0, 0, 0.04);
+  --surface-strong: rgba(0, 0, 0, 0.08);
+  --surface-border: rgba(0, 0, 0, 0.12);
+  --accent: #000000;
+  --accent-muted: #4b5563;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0f172a;
-    --foreground: #f1f5f9;
+    --background: #ffffff;
+    --foreground: #000000;
   }
 }
 
@@ -21,6 +24,31 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: 'Geist Sans', Arial, sans-serif;
+}
+
+.text-muted {
+  color: #4b5563;
+}
+
+.surface {
+  background: var(--surface);
+  border: 1px solid var(--surface-border);
+}
+
+.surface-strong {
+  background: var(--surface-strong);
+  border: 1px solid var(--surface-border);
+}
+
+.brand-gradient {
+  background: linear-gradient(90deg, rgba(0,0,0,0.9) 0%, rgba(75,85,99,0.35) 55%, rgba(0,0,0,0.75) 100%);
+}
+
+.brand-text-gradient {
+  background: linear-gradient(90deg, #000000 0%, #4b5563 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 /* Custom animations */
@@ -97,7 +125,7 @@ body {
 
 /* Cinema gradient background */
 .cinema-gradient {
-  background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+  background: linear-gradient(135deg, rgba(255,255,255,1) 0%, rgba(241,245,249,0.8) 50%, rgba(255,255,255,1) 100%);
 }
 
 /* Custom scrollbar */

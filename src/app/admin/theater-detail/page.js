@@ -38,7 +38,7 @@ const STATUS_OPTIONS = [
     { label: "Rejected", value: "REJECTED" },
 ];
 
-const AdminTheatersPage = () => {
+const TheaterDetailPage = () => {
     const [theaters, setTheaters] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [activeModal, setActiveModal] = useState(null);
@@ -69,21 +69,6 @@ const AdminTheatersPage = () => {
 
     const getOwnerName = (theater) => {
         return theater?.owner?.name || theater?.owner_name || theater?.seller?.name || theater?.seller_name || theater?.registered_by || "Unknown";
-    };
-
-    const handleStatusChange = async (theaterId, newStatus) => {
-        setErrorMessage("");
-        setStatusUpdatingId(theaterId);
-
-        try {
-            await API.put(`admin/theater/approval`, { approval_status: newStatus, theater_id: theaterId });
-            await fetchTheaters();
-        } catch (error) {
-            console.error(error);
-            setErrorMessage(error.response?.data?.message || "Unable to update theater status.");
-        } finally {
-            setStatusUpdatingId(null);
-        }
     };
 
     const openModal = (modalType, theater = null) => {
@@ -117,19 +102,20 @@ const AdminTheatersPage = () => {
         setActiveModal(modalType);
     };
 
+
     const handleTheaterDetail = async (theaterId) => {
-        // try{
-        //     const response = await API.get(`admin/theater/${theaterId}`);
-        //     const data = response.data;
-        //     const theater = data?.theater;
-        //     if(theater){
-        //         openModal("editTheater", theater);
-        //     } else {
-        //         setErrorMessage("Theater details not found.");
-        //     }
-        // } catch(err){
-        //     console.error(err);
-        // }
+        try{
+            const response = await API.get(`admin/theater/${theaterId}`);
+            const data = response.data;
+            const theater = data?.theater;
+            if(theater){
+                openModal("editTheater", theater);
+            } else {
+                setErrorMessage("Theater details not found.");
+            }
+        } catch(err){
+            console.error(err);
+        }
     }
 
     return (
@@ -241,4 +227,4 @@ const AdminTheatersPage = () => {
     );
 };
 
-export default AdminTheatersPage;
+export default TheaterDetailPage;

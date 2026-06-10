@@ -64,24 +64,24 @@ const AdminDashboardPage = () => {
         <AdminRoute>
             <div className="space-y-8">
                 <div>
-                    <h1 className="text-4xl font-bold text-white">
+                    <h1 className="text-4xl font-bold text-black">
                         Dashboard
                     </h1>
-                    <p className="mt-2 text-slate-400">
+                    <p className="mt-2 text-slate-600">
                         Quick overview of all theaters, screens, shows, and ticket share revenues.
                     </p>
                 </div>
 
                 {isLoading ? (
-                    <div className="rounded-3xl border border-slate-800/70 bg-slate-900/80 p-8 text-center text-slate-300 shadow-2xl backdrop-blur-sm">
+                    <div className="rounded-3xl border border-slate-200 bg-white/80 p-8 text-center text-slate-700 shadow-2xl backdrop-blur-sm">
                         .
                     </div>
                 ) : (
                     <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-4">
                         {stats.map((item) => (
-                            <div key={item.label} className="rounded-3xl border border-slate-800/70 bg-slate-900/80 p-6 shadow-2xl backdrop-blur-sm">
-                                <h2 className="text-slate-400">{item.label}</h2>
-                                <p className="mt-4 text-3xl font-semibold text-white">{item.value}</p>
+                            <div key={item.label} className="rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-2xl backdrop-blur-sm">
+                                <h2 className="text-slate-600">{item.label}</h2>
+                                <p className="mt-4 text-3xl font-semibold text-black">{item.value}</p>
                             </div>
                         ))}
                     </div>
